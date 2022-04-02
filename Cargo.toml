@@ -12,6 +12,5 @@ rand = "0.8.5"
 criterion = { version = "0.3.5", features = ["html_reports"] }
 
 [[bench]]
-name = "perf_pack_naive"
-#name = "perf_pack_tight"
+name = "perf_packing"
 harness = false
