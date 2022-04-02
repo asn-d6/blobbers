@@ -1,7 +1,6 @@
-/// A naive packer that packs 31bytes (248 bits) per field element.
+/// A naive packer that packs 31 bytes (248 bits) per field element.
 
 use thiserror::Error;
-use rand::Rng;
 
 /// The number of field elements per blob
 const FIELD_ELEMENTS_PER_BLOB: usize = 1016;
@@ -77,17 +76,17 @@ pub fn get_blobs_from_data(data: &[u8]) -> Result<Vec<Blob>, PackingError> {
     assert!(data.len() <= MAX_USEFUL_BYTES_PER_TX);
 
     let n_blobs_needed = data.len().div_ceil(USEFUL_BYTES_PER_BLOB); // XXX need nightly for div_ceil()
-//    println!("[*] We got {} bytes, we will need {} blobs for that!", data.len(), n_blobs_needed);
+    // println!("[*] We got {} bytes, we will need {} blobs for that!", data.len(), n_blobs_needed);
 
     let padded_data = get_padded(data, n_blobs_needed);
-//    println!("[*] We started with {} bytes; now we have {} padded bytes [{:?}]!", data.len(), padded_data.len(), padded_data);
+    // println!("[*] We started with {} bytes; now we have {} padded bytes [{:?}]!", data.len(), padded_data.len(), padded_data);
 
     let mut blobs = Vec::<Blob>::with_capacity(n_blobs_needed);
     for i in 0..n_blobs_needed {
         // Get a bunch of data, and pack it into a blob
         let chunk = &padded_data[i*USEFUL_BYTES_PER_BLOB..(i+1)*USEFUL_BYTES_PER_BLOB];
         let blob = get_blob(chunk.try_into().expect("bad chunking"));
-//        println!("[*] Got {}th blob: {} bytes", i, blob.len());
+        // println!("[*] Got {}th blob: {} bytes", i, blob.len());
         blobs.push(blob)
     }
 

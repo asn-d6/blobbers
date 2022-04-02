@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 #![feature(int_roundings)]
 
 use std::time::Duration;
@@ -19,7 +20,7 @@ fn benchmark_packing(c: &mut Criterion) {
 
     // Pack tightly
     c.bench_function("tight_packing", |b| b.iter(|| {
-        let _blobs = packer_tight::get_tight_blobs_from_data(&data);
+        let _blobs = packer_tight::get_blobs_from_data(&data);
     }));
 }
 
