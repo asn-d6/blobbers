@@ -3,15 +3,15 @@
 use std::time::Duration;
 use criterion::*;
 
-#[path = "../src/packer.rs"]
-mod packer;
+#[path = "../src/packer_naive.rs"]
+mod packer_naive;
 
 fn benchmark_naive_packing(c: &mut Criterion) {
     // Pack a pretty full transaction
-    let data: Vec<u8> = (0..packer::MAX_USEFUL_BYTES_PER_TX - 5).map(|_| { rand::random::<u8>() }).collect();
+    let data: Vec<u8> = (0..packer_naive::MAX_USEFUL_BYTES_PER_TX - 5).map(|_| { rand::random::<u8>() }).collect();
 
     c.bench_function("naive_packing", |b| b.iter(|| {
-        let blobs = packer::get_blobs_from_data(&data);
+        let blobs = packer_naive::get_blobs_from_data(&data);
     }));
 }
 

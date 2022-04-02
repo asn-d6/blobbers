@@ -1,6 +1,6 @@
 #![feature(int_roundings)]
 
-mod packer;
+mod packer_naive;
 mod packer_tight;
 
 fn main() {
